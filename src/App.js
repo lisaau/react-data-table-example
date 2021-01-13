@@ -58,10 +58,11 @@ function App() {
       ) : (
         <label for="selectAll">Selected {selectedFiles.length}</label>
       )}
-      <button id="btn" onClick={onDownload}>
-        <GetAppIcon style={{ float: "left" }} />
-        Download Selected
-      </button>
+      {selectedFiles.length > 0 ? (
+        <DownloadButton onDownload={onDownload} isDisabled={false} />
+      ) : (
+        <DownloadButton onDownload={onDownload} isDisabled={true} />
+      )}
       <table>
           <thead>
             <th></th>
@@ -109,6 +110,15 @@ const File = ({ file, isChecked, select, unselect }) => {
     </tr>
   );
 };
+
+const DownloadButton = ({onDownload, isDisabled}) => {
+  return (
+    <button id={isDisabled ? "disabledBtn" : "btn"} onClick={onDownload} disabled={isDisabled}>
+        <GetAppIcon style={{ float: "left" }} />
+        Download Selected
+      </button>
+  )
+}
 
 const data = [
   {

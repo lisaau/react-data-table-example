@@ -20,6 +20,13 @@ td {
   color: #2f3032;
 }
 
+#disabledBtn {
+  border: none;
+  background: none;
+  font-size: 20px;
+  color: #d5d9e0
+}
+
 label {
   color: #2f3032;
   font-size: 20px;
