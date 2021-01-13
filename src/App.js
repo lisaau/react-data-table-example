@@ -52,7 +52,7 @@ function App() {
       ) : (
         <>Selected {selectedFiles.length}</>
       )}
-      <button onClick={onDownload}>
+      <button id="btn" onClick={onDownload}>
         Download Selected
       </button>
       <table>
