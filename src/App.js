@@ -2,18 +2,41 @@ import React from "react";
 import './App.css';
 
 function App() {
+  const availableFiles = getAvailableFiles(data);
   const [selectedFiles, setSelectedFiles] = React.useState([]);
 
+  const selectAllCheckbox = React.useRef();
+  
+  React.useEffect(() => {
+    selectAllCheckbox.current.indeterminate = false;
+    
+    selectedFiles.length === availableFiles.length
+    ? (selectAllCheckbox.current.checked = true)
+    : selectedFiles.length === 0
+    ? (selectAllCheckbox.current.checked = false)
+    : (selectAllCheckbox.current.indeterminate = true);
+  }, [availableFiles, selectedFiles]);
+  
+  const onChangeselectAllCheckbox = () => {
+    availableFiles.length === selectedFiles.length
+    ? setSelectedFiles([])
+    : setSelectedFiles(availableFiles);
+  };
+  
   const onDownload = () => {alert('placeholder download function')}
-
+  
   return (
     <main>
-      <input type="checkbox"/>
-        {selectedFiles.length === 0 ? (
-          "None selected"
-        ) : (
-          <>Selected {selectedFiles.length}</>
-        )}
+      <input
+        type="checkbox"
+        ref={selectAllCheckbox}
+        onChange={() => onChangeselectAllCheckbox()}
+      />
+      {selectedFiles.length === 0 ? (
+        "None selected"
+      ) : (
+        <>Selected {selectedFiles.length}</>
+      )}
       <button onClick={onDownload}>
         Download Selected
       </button>
@@ -77,5 +100,9 @@ const data = [
     status: "scheduled"
   }
 ];
+
+function getAvailableFiles(files) {
+  return files.filter((f) => f.status === "available").map((f) => f.name);
+}
 
 export default App;
