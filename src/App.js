@@ -92,7 +92,7 @@ const File = ({ file, isChecked, select, unselect }) => {
   const isAvailable = file.status === "available";
   const onChange = () => (isChecked ? unselect(file.name) : select(file.name));
   return (
-    <tr>
+    <tr style={isChecked ? {backgroundColor:"#EEEEEE"} : {}}>
       <td>
         {isAvailable ? (
           <input type="checkbox" onChange={onChange} checked={isChecked} />

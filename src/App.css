@@ -36,3 +36,7 @@ label {
 .selectAll {
   margin: 1.3rem;
 }
+
+.highlightedRow {
+  background-color: "#EEEEEE"
+}
