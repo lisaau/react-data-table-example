@@ -1,6 +1,11 @@
 import React from "react";
 import './App.css';
 
+import { green } from '@material-ui/core/colors';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import GetAppIcon from "@material-ui/icons/GetApp";
+
+
 function App() {
   const availableFiles = getAvailableFiles(data);
   const [selectedFiles, setSelectedFiles] = React.useState([]);
@@ -46,13 +51,15 @@ function App() {
         type="checkbox"
         ref={selectAllCheckbox}
         onChange={() => onChangeselectAllCheckbox()}
+        className="selectAll"
       />
       {selectedFiles.length === 0 ? (
-        "None selected"
+        <label for="selectAll">None selected</label>
       ) : (
-        <>Selected {selectedFiles.length}</>
+        <label for="selectAll">Selected {selectedFiles.length}</label>
       )}
       <button id="btn" onClick={onDownload}>
+        <GetAppIcon style={{ float: "left" }} />
         Download Selected
       </button>
       <table>
@@ -96,7 +103,8 @@ const File = ({ file, isChecked, select, unselect }) => {
       <td>{file.device}</td>
       <td>{file.path}</td>
       <td>
-        {file.status} {isAvailable ? "greenCirclePlaceholder" : ""}
+        {isAvailable ? <FiberManualRecordIcon style={{ color: green[500] }}/> : ""}
+        {file.status.charAt(0).toUpperCase() + file.status.slice(1)}
       </td>
     </tr>
   );

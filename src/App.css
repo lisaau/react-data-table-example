@@ -8,13 +8,24 @@ table {
 
 th,
 td {
+  color: #2f3032;
   padding: 1rem;
-  border-top: 1px solid gray;
+  border-top: 1px solid #ebebeb;
 }
 
 #btn {
   border: none;
   background: none;
-  cursor: "pointer";
-  font-size: 20px
+  font-size: 20px;
+  color: #2f3032;
+}
+
+label {
+  color: #2f3032;
+  font-size: 20px;
+  margin-right: 1rem;
+}
+
+.selectAll {
+  margin: 1.3rem;
 }
