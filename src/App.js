@@ -5,6 +5,9 @@ function App() {
   const availableFiles = getAvailableFiles(data);
   const [selectedFiles, setSelectedFiles] = React.useState([]);
 
+  const select = () => {console.log('placeholder select')};
+  const unselect = () => {console.log('placeholder unselect')};
+
   const selectAllCheckbox = React.useRef();
   
   React.useEffect(() => {
@@ -22,7 +25,7 @@ function App() {
     ? setSelectedFiles([])
     : setSelectedFiles(availableFiles);
   };
-  
+
   const onDownload = () => {alert('placeholder download function')}
   
   return (
@@ -50,23 +53,42 @@ function App() {
           </thead>
           <tbody>
             {data.map((file) => {
-              return (
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>{file.name}</td>
-                  <td>{file.device}</td>
-                  <td>{file.path}</td>
-                  <td>{file.status}</td>
-                </tr>
-              );
-            })}
+            const isChecked = selectedFiles.includes(file.name);
+            return (
+              <File
+                key={file.name}
+                file={file}
+                {...{ isChecked, select, unselect }}
+              />
+            );
+          })}
           </tbody>
         </table>
     </main>
   );
 }
+
+const File = ({ file, isChecked, select, unselect }) => {
+  const isAvailable = file.status === "available";
+  const onChange = () => (isChecked ? unselect(file.name) : select(file.name));
+  return (
+    <tr>
+      <td>
+        {isAvailable ? (
+          <input type="checkbox" onChange={onChange} checked={isChecked} />
+        ) : (
+          <input type="checkbox" disabled />
+        )}
+      </td>
+      <td>{file.name}</td>
+      <td>{file.device}</td>
+      <td>{file.path}</td>
+      <td>
+        {file.status} {isAvailable ? "greenCirclePlaceholder" : ""}
+      </td>
+    </tr>
+  );
+};
 
 const data = [
   {
