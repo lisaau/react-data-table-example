@@ -5,8 +5,12 @@ function App() {
   const availableFiles = getAvailableFiles(data);
   const [selectedFiles, setSelectedFiles] = React.useState([]);
 
-  const select = () => {console.log('placeholder select')};
-  const unselect = () => {console.log('placeholder unselect')};
+  const select = (key) => {
+    setSelectedFiles([...new Set([...selectedFiles, key])]);
+  };
+  const unselect = (key) => {
+    setSelectedFiles(selectedFiles.filter((k) => k !== key));
+  };
 
   const selectAllCheckbox = React.useRef();
   
