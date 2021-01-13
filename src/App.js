@@ -1,34 +1,48 @@
+import React from "react";
 import './App.css';
 
 function App() {
+  const [selectedFiles, setSelectedFiles] = React.useState([]);
+
+  const onDownload = () => {alert('placeholder download function')}
+
   return (
-    <table>
-        <thead>
-          <th></th>
-          <th>Name</th>
-          <th>Device</th>
-          <th>Path</th>
-          <th>Status</th>
-        </thead>
-        <tbody>
-          {data.map((item) => {
-            return (
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>{item.name}</td>
-                <td>{item.device}</td>
-                <td>{item.path}</td>
-                <td>{item.status}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+    <main>
+      <input type="checkbox"/>
+        {selectedFiles.length === 0 ? (
+          "None selected"
+        ) : (
+          <>Selected {selectedFiles.length}</>
+        )}
+      <button onClick={onDownload}>
+        Download Selected
+      </button>
+      <table>
+          <thead>
+            <th></th>
+            <th>Name</th>
+            <th>Device</th>
+            <th>Path</th>
+            <th>Status</th>
+          </thead>
+          <tbody>
+            {data.map((file) => {
+              return (
+                <tr>
+                  <td>
+                    <input type="checkbox" />
+                  </td>
+                  <td>{file.name}</td>
+                  <td>{file.device}</td>
+                  <td>{file.path}</td>
+                  <td>{file.status}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+    </main>
   );
-
-
 }
 
 const data = [
