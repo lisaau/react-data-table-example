@@ -30,7 +30,15 @@ function App() {
     : setSelectedFiles(availableFiles);
   };
 
-  const onDownload = () => {alert('placeholder download function')}
+  const onDownload = () => {
+    let downloadMessage = "Downloading: \n";
+    for (let file of data) {
+      if (selectedFiles.includes(file.name)) {
+        downloadMessage += file.name + ", " + file.device + "\n";
+      }
+    }
+    alert(downloadMessage.trim());
+  };
   
   return (
     <main>
