@@ -48,38 +48,42 @@ function App() {
   return (
     <main>
       <table>
-        <tr>
-          <td>
-            <input
-              type="checkbox"
-              ref={selectAllCheckbox}
-              onChange={() => onChangeSelectAllCheckbox()}
-            />
-          </td>
-          <td style={{ width: "170px", fontSize: "20px" }}>
-            {selectedFiles.length === 0 ? (
-              "None selected"
-            ) : (
-              <>Selected {selectedFiles.length}</>
-            )}
-          </td>
-          <td>
-            {selectedFiles.length > 0 ? (
-              <DownloadButton onDownload={onDownload} />
-            ) : (
-              <DownloadButton disabled />
-            )}
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>
+              <input
+                type="checkbox"
+                ref={selectAllCheckbox}
+                onChange={() => onChangeSelectAllCheckbox()}
+              />
+            </td>
+            <td style={{ width: "170px", fontSize: "20px" }}>
+              {selectedFiles.length === 0 ? (
+                "None selected"
+              ) : (
+                <>Selected {selectedFiles.length}</>
+              )}
+            </td>
+            <td>
+              {selectedFiles.length > 0 ? (
+                <DownloadButton onDownload={onDownload} />
+              ) : (
+                <DownloadButton disabled />
+              )}
+            </td>
+          </tr>
+        </tbody>
       </table>
 
       <table>
         <thead>
-          <th></th>
-          <th style={{ width: "170px" }}>Name</th>
-          <th>Device</th>
-          <th>Path</th>
-          <th>Status</th>
+          <tr>
+            <th></th>
+            <th style={{ width: "170px" }}>Name</th>
+            <th>Device</th>
+            <th>Path</th>
+            <th>Status</th>
+          </tr>
         </thead>
         <tbody>
           {data.map((file) => {
