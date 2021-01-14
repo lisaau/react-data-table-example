@@ -105,7 +105,7 @@ const File = ({ file, isChecked, select, unselect }) => {
   const isAvailable = file.status === "available";
   const onChange = () => (isChecked ? unselect(file.name) : select(file.name));
   return (
-    <tr style={isChecked ? { backgroundColor: "#EEEEEE" } : {}}>
+    <tr className="fileRow" style={isChecked ? { backgroundColor: "#EEEEEE" } : {}}>
       <td>
         {isAvailable ? (
           <input type="checkbox" onChange={onChange} checked={isChecked} />
@@ -116,7 +116,7 @@ const File = ({ file, isChecked, select, unselect }) => {
       <td>{file.name}</td>
       <td>{file.device}</td>
       <td style={{ width: "500px" }}>{file.path}</td>
-      <td>
+      <td style={{ display:"flex", alignItems:"center" }}>
         {isAvailable ? (
           <FiberManualRecordIcon
             style={{
