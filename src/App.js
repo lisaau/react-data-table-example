@@ -1,10 +1,10 @@
 import React from "react";
-import './App.css';
+import "./App.css";
+import { data, getAvailableFiles } from "./data";
 
-import { green } from '@material-ui/core/colors';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import { green } from "@material-ui/core/colors";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import GetAppIcon from "@material-ui/icons/GetApp";
-
 
 function App() {
   const availableFiles = getAvailableFiles(data);
@@ -18,21 +18,21 @@ function App() {
   };
 
   const selectAllCheckbox = React.useRef();
-  
+
   React.useEffect(() => {
     selectAllCheckbox.current.indeterminate = false;
-    
+
     selectedFiles.length === availableFiles.length
-    ? (selectAllCheckbox.current.checked = true)
-    : selectedFiles.length === 0
-    ? (selectAllCheckbox.current.checked = false)
-    : (selectAllCheckbox.current.indeterminate = true);
+      ? (selectAllCheckbox.current.checked = true)
+      : selectedFiles.length === 0
+      ? (selectAllCheckbox.current.checked = false)
+      : (selectAllCheckbox.current.indeterminate = true);
   }, [availableFiles, selectedFiles]);
-  
-  const onChangeselectAllCheckbox = () => {
+
+  const onChangeSelectAllCheckbox = () => {
     availableFiles.length === selectedFiles.length
-    ? setSelectedFiles([])
-    : setSelectedFiles(availableFiles);
+      ? setSelectedFiles([])
+      : setSelectedFiles(availableFiles);
   };
 
   const onDownload = () => {
@@ -44,46 +44,55 @@ function App() {
     }
     alert(downloadMessage.trim());
   };
-  
+
   return (
     <main>
-      <input
-        type="checkbox"
-        ref={selectAllCheckbox}
-        onChange={() => onChangeselectAllCheckbox()}
-        className="selectAll"
-      />
-      {selectedFiles.length === 0 ? (
-        <label for="selectAll">None selected</label>
-      ) : (
-        <label for="selectAll">Selected {selectedFiles.length}</label>
-      )}
-      {selectedFiles.length > 0 ? (
-        <DownloadButton onDownload={onDownload} isDisabled={false} />
-      ) : (
-        <DownloadButton onDownload={onDownload} isDisabled={true} />
-      )}
       <table>
-          <thead>
-            <th></th>
-            <th>Name</th>
-            <th>Device</th>
-            <th>Path</th>
-            <th>Status</th>
-          </thead>
-          <tbody>
-            {data.map((file) => {
+        <tr>
+          <td>
+            <input
+              type="checkbox"
+              ref={selectAllCheckbox}
+              onChange={() => onChangeSelectAllCheckbox()}
+            />
+          </td>
+          <td style={{ width: "170px", fontSize: "20px" }}>
+            {selectedFiles.length === 0 ? (
+              "None selected"
+            ) : (
+              <>Selected {selectedFiles.length}</>
+            )}
+          </td>
+          <td>
+            {selectedFiles.length > 0 ? (
+              <DownloadButton onDownload={onDownload} />
+            ) : (
+              <DownloadButton disabled />
+            )}
+          </td>
+        </tr>
+      </table>
+
+      <table>
+        <thead>
+          <th></th>
+          <th style={{ width: "170px" }}>Name</th>
+          <th>Device</th>
+          <th>Path</th>
+          <th>Status</th>
+        </thead>
+        <tbody>
+          {data.map((file) => {
             const isChecked = selectedFiles.includes(file.name);
             return (
               <File
                 key={file.name}
-                file={file}
-                {...{ isChecked, select, unselect }}
+                {...{ file, isChecked, select, unselect }}
               />
             );
           })}
-          </tbody>
-        </table>
+        </tbody>
+      </table>
     </main>
   );
 }
@@ -92,7 +101,7 @@ const File = ({ file, isChecked, select, unselect }) => {
   const isAvailable = file.status === "available";
   const onChange = () => (isChecked ? unselect(file.name) : select(file.name));
   return (
-    <tr style={isChecked ? {backgroundColor:"#EEEEEE"} : {}}>
+    <tr style={isChecked ? { backgroundColor: "#EEEEEE" } : {}}>
       <td>
         {isAvailable ? (
           <input type="checkbox" onChange={onChange} checked={isChecked} />
@@ -102,59 +111,31 @@ const File = ({ file, isChecked, select, unselect }) => {
       </td>
       <td>{file.name}</td>
       <td>{file.device}</td>
-      <td>{file.path}</td>
+      <td style={{ width: "500px" }}>{file.path}</td>
       <td>
-        {isAvailable ? <FiberManualRecordIcon style={{ color: green[500] }}/> : ""}
+        {isAvailable ? (
+          <FiberManualRecordIcon
+            style={{
+              color: green[500],
+              marginLeft: "-1em"
+            }}
+          />
+        ) : (
+          ""
+        )}
         {file.status.charAt(0).toUpperCase() + file.status.slice(1)}
       </td>
     </tr>
   );
 };
 
-const DownloadButton = ({onDownload, isDisabled}) => {
+const DownloadButton = ({ onDownload = () => {}, ...props }) => {
   return (
-    <button id={isDisabled ? "disabledBtn" : "btn"} onClick={onDownload} disabled={isDisabled}>
-        <GetAppIcon style={{ float: "left" }} />
-        Download Selected
-      </button>
-  )
-}
-
-const data = [
-  {
-    name: "smss.exe",
-    device: "Stark",
-    path: "\\Device\\HarddiskVolume2\\Windows\\System32\\smss.exe",
-    status: "scheduled"
-  },
-  {
-    name: "netsh.exe",
-    device: "Targaryen",
-    path: "\\Device\\HarddiskVolume2\\Windows\\System32\\netsh.exe",
-    status: "available"
-  },
-  {
-    name: "uxtheme.dll",
-    device: "Lanniester",
-    path: "\\Device\\HarddiskVolume1\\Windows\\System32\\uxtheme.dll",
-    status: "available"
-  },
-  {
-    name: "cryptbase.dll",
-    device: "Martell",
-    path: "\\Device\\HarddiskVolume1\\Windows\\System32\\cryptbase.dll",
-    status: "scheduled"
-  },
-  {
-    name: "7za.exe",
-    device: "Baratheon",
-    path: "\\Device\\HarddiskVolume1\\temp\\7za.exe",
-    status: "scheduled"
-  }
-];
-
-function getAvailableFiles(files) {
-  return files.filter((f) => f.status === "available").map((f) => f.name);
-}
+    <button onClick={onDownload} {...props}>
+      <GetAppIcon style={{ float: "left" }} />
+      Download Selected
+    </button>
+  );
+};
 
 export default App;
