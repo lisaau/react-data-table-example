@@ -1,5 +1,7 @@
 # React Table Example
 
+![react-table](/Users/tpl619_2/Desktop/react-table-example/react-table.gif)
+
 ## Requirements
 
 - The component should be able to be given the following data:
