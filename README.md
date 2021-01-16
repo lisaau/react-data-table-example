@@ -1,6 +1,6 @@
 # React Table Example
 
-![react-table](/Users/tpl619_2/Desktop/react-table-example/react-table.gif)
+![react-table-example](react-table.gif)
 
 ## Requirements
 
